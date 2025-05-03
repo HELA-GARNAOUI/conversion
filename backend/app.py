@@ -3,6 +3,7 @@ from flask_cors import CORS
 import os
 from werkzeug.utils import secure_filename
 from utils import extract_text, detect_language, extract_keywords
+from flask import send_file
 
 app = Flask(__name__)
 CORS(app)
@@ -26,20 +27,10 @@ def convert():
     # Keyword extraction
     keywords = extract_keywords(text)
 
-    # Save result to text file
-    result_path = os.path.join(UPLOAD_FOLDER, f"{filename}.txt")
-    with open(result_path, "w", encoding="utf-8") as f:
-        f.write(f"Language: {language}\n\n")
-        f.write("Text:\n")
-        f.write(text + "\n\n")
-        f.write("Keywords:\n")
-        f.write(", ".join(keywords))
-
     return jsonify({
         'text': text,
         'language': language,
-        'keywords': keywords,
-        'result_file': result_path  # Optional
+        'keywords': keywords
     })
 
 if __name__ == '__main__':

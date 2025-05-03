@@ -3,25 +3,33 @@ import React, { useState } from 'react';
 const UploadForm = ({ onResult }) => {
   const [file, setFile] = useState(null);
 
-  const handleUpload = async (event) => {
-    event.preventDefault();
-  
+  const handleUpload = async (e) => {
+    e.preventDefault();
+    if (!file) return;
+
     const formData = new FormData();
-    formData.append("file", file);
-  
-    const response = await fetch("http://127.0.0.1:5000/convert", {
-      method: "POST",
+    formData.append('file', file);
+
+    const res = await fetch('http://localhost:5000/convert', {
+      method: 'POST',
       body: formData,
     });
-  
-    const data = await response.json();
-    console.log(data); // Should show text, language, keywords
+
+    if (res.ok) {
+      const data = await res.json();
+      onResult(data);
+    } else {
+      alert('Upload or conversion failed.');
+    }
   };
-  
 
   return (
     <form onSubmit={handleUpload}>
-      <input type="file" accept="image/*" onChange={(e) => setFile(e.target.files[0])} />
+      <input
+        type="file"
+        accept="image/*"
+        onChange={(e) => setFile(e.target.files[0])}
+      />
       <button type="submit">Upload</button>
     </form>
   );
