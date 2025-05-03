@@ -5,7 +5,7 @@ body {
 }
 
 .navbar {
-  background-color: #b8d7f8;
+  background-color: #4defcc;
   padding: 15px;
   color: white;
   text-align: center;
@@ -28,7 +28,7 @@ input[type="file"] {
 }
 
 button {
-  background-color: #b8d7f8;
+  background-color: #4defcc;
   color: white;
   padding: 10px 20px;
   border: none;
